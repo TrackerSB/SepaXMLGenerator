@@ -1,0 +1,86 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+
+    id 'com.github.gmazzo.buildconfig' version "2.0.2"
+}
+
+group 'bayern.steinbrecher'
+version '0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+test {
+    useTestNG()
+}
+
+buildConfig {
+    buildConfigField("String", "LIB_NAME", "\"${project.name}\"")
+    buildConfigField("String", "LIB_VERSION", "\"${project.version}\"")
+    buildConfigField("long", "BUILD_TIME", "${System.currentTimeMillis()}L")
+    packageName("bayern.steinbrecher.sepaxmlgenerator")
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.release = 16
+}
+
+javadoc {
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "OSSRH"
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = "${ossrhUsername}"
+                password = "${ossrhPassword}"
+            }
+        }
+    }
+    publications {
+        mavenLibrary(MavenPublication) {
+            pom {
+                name = "${project.name}"
+                description = 'A library for generating multiple SEPA standard XML files from an abstract description'
+                url = 'https://github.com/TrackerSB/SepaXMLGenerator'
+                licenses {
+                    license {
+                        name = 'The Beer-Ware License (Revision 42)'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'stefanHuber'
+                        name = 'Stefan Huber'
+                        email = 'stefan.huber.niedling@outlook.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/TrackerSB/SepaXMLGenerator.git'
+                    developerConnection = 'scm:git:ssh://github.com/TrackerSB/SepaXMLGenerator.git'
+                    url = 'https://steinbrecher.bayern'
+                }
+            }
+            from components.java
+        }
+    }
+}
+
+signing {
+    useGpgCmd()
+    sign publishing.publications.mavenLibrary
+}

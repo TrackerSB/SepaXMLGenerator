@@ -1,0 +1,2 @@
+module bayern.steinbrecher.SepaXMLGenerator {
+}
