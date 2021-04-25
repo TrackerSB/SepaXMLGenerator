@@ -14,6 +14,10 @@ repositories {
 }
 
 dependencies {
+    annotationProcessor 'io.soabase.record-builder:record-builder-processor:1.19'
+    compileOnly 'io.soabase.record-builder:record-builder-core:1.19'
+
+    testImplementation 'org.testng:testng:7.4.0'
 }
 
 test {
@@ -30,6 +34,10 @@ buildConfig {
 compileJava {
     options.encoding = 'UTF-8'
     options.release = 16
+    options.compilerArgs = [
+            // FIXME Use $moduleName or similar
+            "--add-reads", "bayern.steinbrecher.SepaXMLGenerator=ALL-UNNAMED"
+    ]
 }
 
 javadoc {
