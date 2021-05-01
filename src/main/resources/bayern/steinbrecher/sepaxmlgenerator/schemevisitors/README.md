@@ -1,0 +1,1 @@
+The XSD files are take from https://www.iso20022.org/iso-20022-message-definitions
