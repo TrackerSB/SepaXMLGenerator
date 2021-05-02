@@ -4,6 +4,10 @@ import bayern.steinbrecher.sepaxmlgenerator.SepaDocumentDescription;
 import bayern.steinbrecher.sepaxmlgenerator.SepaGenerator;
 import bayern.steinbrecher.sepaxmlgenerator.SepaVersion;
 
+/**
+ * @author Stefan Huber
+ * @since 0.1
+ */
 public class SepaPain00800109Generator implements SepaGenerator {
     @Override
     public String generateXML(SepaVersion version, SepaDocumentDescription sepaDocumentDescription) {
