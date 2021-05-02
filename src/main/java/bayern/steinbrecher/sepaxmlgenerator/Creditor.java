@@ -7,8 +7,5 @@ import io.soabase.recordbuilder.core.RecordBuilder;
  * @since 0.1
  */
 @RecordBuilder
-public record Creditor(CreditorId creditorId, AccountHolder accountHolder) {
-    public boolean isValid() {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
+public record Creditor(String creditorId, AccountHolder accountHolder) {
 }

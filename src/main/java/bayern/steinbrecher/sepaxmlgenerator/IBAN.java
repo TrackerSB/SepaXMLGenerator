@@ -8,7 +8,4 @@ import io.soabase.recordbuilder.core.RecordBuilder;
  */
 @RecordBuilder
 public record IBAN(String iban) {
-    public boolean isValid() {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
 }
