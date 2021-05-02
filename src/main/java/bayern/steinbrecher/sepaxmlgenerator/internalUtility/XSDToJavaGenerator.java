@@ -1,6 +1,5 @@
 package bayern.steinbrecher.sepaxmlgenerator.internalUtility;
 
-import bayern.steinbrecher.sepaxmlgenerator.schemevisitors.SepaPain00800109Visitor;
 import com.sun.codemodel.JCodeModel;
 import com.sun.tools.xjc.api.S2JJAXBModel;
 import com.sun.tools.xjc.api.SchemaCompiler;
@@ -19,7 +18,7 @@ public class XSDToJavaGenerator {
         schemaCompiler.setDefaultPackageName(XSDToJavaGenerator.class.getPackageName() + ".generated");
         InputSource xsdSource = new InputSource(
                 new FileReader(
-                        SepaPain00800109Visitor.class
+                        XSDToJavaGenerator.class
                                 .getResource("pain.008.001.09.xsd")
                                 .toExternalForm()
                                 .substring(6)
