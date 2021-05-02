@@ -3,4 +3,5 @@ module bayern.steinbrecher.SepaXMLGenerator {
 
     requires java.compiler;
     requires java.xml;
+    requires com.sun.tools.xjc;
 }
