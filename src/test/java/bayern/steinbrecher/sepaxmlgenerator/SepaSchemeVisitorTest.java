@@ -4,13 +4,18 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+/**
+ * @author Stefan Huber
+ * @since 0.1
+ */
 @Test
 public class SepaSchemeVisitorTest {
     @Test
-    public void generateSingleTransactionSepa() {
+    public void generateSingleTransactionSepa() throws GenerationFailedException {
         SepaDocumentDescription sepaDocumentDescription = new SepaDocumentDescription(
+                "msgId",
                 new Creditor(
-                        new CreditorId("DE98ZZZ09999999999"),
+                        "DE98ZZZ09999999999",
                         new AccountHolder("Joe", "Moneymaker",
                                 new IBAN("DE91100000000123456789"),
                                 new BIC("MARKDEF1180"))
@@ -33,7 +38,8 @@ public class SepaSchemeVisitorTest {
                                 13.37
                         )
                 ));
-        String generatedXML = SepaGenerator.generateXML(SepaVersion.PAIN_008_001_09, sepaDocumentDescription);
-        System.out.println("generatedXML = " + generatedXML);
+        String generatedXML = SepaGenerator.getGenerator(SepaVersion.PAIN_008_001_09)
+                .generateXML(sepaDocumentDescription);
+        System.out.println("generatedXML =\n" + generatedXML);
     }
 }

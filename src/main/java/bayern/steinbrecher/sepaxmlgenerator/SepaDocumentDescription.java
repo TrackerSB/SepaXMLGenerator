@@ -9,5 +9,8 @@ import java.util.Collection;
  * @since 0.1
  */
 @RecordBuilder
-public record SepaDocumentDescription(Creditor creditor, Collection<DirectDebitTransaction> transactions) {
+public record SepaDocumentDescription(
+        String msgId,
+        Creditor creditor,
+        Collection<DirectDebitTransaction> transactions) {
 }
