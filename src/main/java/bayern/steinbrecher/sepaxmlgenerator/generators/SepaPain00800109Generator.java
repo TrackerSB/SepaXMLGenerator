@@ -29,6 +29,10 @@ public class SepaPain00800109Generator extends SepaGenerator {
         }
     }
 
+    public SepaPain00800109Generator() {
+        super("pain.008.001.09.xsd");
+    }
+
     @Override
     public String generateXML(SepaDocumentDescription sepaDocumentDescription) throws GenerationFailedException {
         Document document = new Document();
@@ -44,10 +48,5 @@ public class SepaPain00800109Generator extends SepaGenerator {
         }
 
         return generateXML(document);
-    }
-
-    @Override
-    public boolean validateXML(String xml) {
-        throw new UnsupportedOperationException("Not implemented yet");
     }
 }

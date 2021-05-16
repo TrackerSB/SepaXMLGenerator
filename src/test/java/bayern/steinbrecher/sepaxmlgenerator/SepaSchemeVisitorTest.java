@@ -1,5 +1,6 @@
 package bayern.steinbrecher.sepaxmlgenerator;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -10,6 +11,9 @@ import java.util.List;
  */
 @Test
 public class SepaSchemeVisitorTest {
+
+    private static final SepaGenerator GENERATOR = SepaGenerator.getGenerator(SepaVersion.PAIN_008_001_09);
+
     @Test
     public void generateSingleTransactionSepa() throws GenerationFailedException {
         SepaDocumentDescription sepaDocumentDescription = new SepaDocumentDescription(
@@ -38,8 +42,9 @@ public class SepaSchemeVisitorTest {
                                 13.37
                         )
                 ));
-        String generatedXML = SepaGenerator.getGenerator(SepaVersion.PAIN_008_001_09)
-                .generateXML(sepaDocumentDescription);
+        String generatedXML = GENERATOR.generateXML(sepaDocumentDescription);
         System.out.println("generatedXML =\n" + generatedXML);
+        System.out.println("Validating...");
+        Assert.assertTrue(GENERATOR.validateXML(generatedXML));
     }
 }
