@@ -3,6 +3,7 @@ package bayern.steinbrecher.sepaxmlgenerator;
 import io.soabase.recordbuilder.core.RecordBuilder;
 
 import java.util.Collection;
+import java.util.GregorianCalendar;
 
 /**
  * @author Stefan Huber
@@ -11,6 +12,8 @@ import java.util.Collection;
 @RecordBuilder
 public record SepaDocumentDescription(
         String msgId,
+        String collectorId,
         Creditor creditor,
-        Collection<DirectDebitTransaction> transactions) {
+        Collection<DirectDebitTransaction> transactions,
+        GregorianCalendar executionDate) {
 }

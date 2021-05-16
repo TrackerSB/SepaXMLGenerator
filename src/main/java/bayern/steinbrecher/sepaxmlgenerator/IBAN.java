@@ -7,5 +7,5 @@ import io.soabase.recordbuilder.core.RecordBuilder;
  * @since 0.1
  */
 @RecordBuilder
-public record IBAN(String iban) {
+public record IBAN(String value) {
 }

@@ -3,6 +3,8 @@ package bayern.steinbrecher.sepaxmlgenerator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -16,8 +18,12 @@ public class SepaSchemeVisitorTest {
 
     @Test
     public void generateSingleTransactionSepa() throws GenerationFailedException {
+        GregorianCalendar executionDate = new GregorianCalendar();
+        executionDate.add(Calendar.WEEK_OF_YEAR, 1);
+
         SepaDocumentDescription sepaDocumentDescription = new SepaDocumentDescription(
                 "msgId",
+                "SH-0815",
                 new Creditor(
                         "DE98ZZZ09999999999",
                         new AccountHolder("Joe", "Moneymaker",
@@ -36,12 +42,13 @@ public class SepaSchemeVisitorTest {
                         new DirectDebitTransaction(
                                 new DirectDebitMandate("personB",
                                         new AccountHolder("Jimmy", "James",
-                                                new IBAN("DE27100777770209299700 "),
+                                                new IBAN("DE27100777770209299700"),
                                                 new BIC("DEUTDE2H264"))),
                                 "Another bill",
                                 13.37
                         )
-                ));
+                ),
+                executionDate);
         String generatedXML = GENERATOR.generateXML(sepaDocumentDescription);
         System.out.println("generatedXML =\n" + generatedXML);
         System.out.println("Validating...");
