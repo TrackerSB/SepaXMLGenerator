@@ -7,5 +7,5 @@ import io.soabase.recordbuilder.core.RecordBuilder;
  * @since 0.1
  */
 @RecordBuilder
-public record Creditor(String creditorId, AccountHolder accountHolder) {
+public record Creditor(String collectorId, String creditorId, AccountHolder accountHolder) {
 }

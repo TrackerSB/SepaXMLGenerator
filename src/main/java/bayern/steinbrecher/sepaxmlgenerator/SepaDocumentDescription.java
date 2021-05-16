@@ -12,7 +12,6 @@ import java.util.GregorianCalendar;
 @RecordBuilder
 public record SepaDocumentDescription(
         String msgId,
-        String collectorId,
         Creditor creditor,
         Collection<DirectDebitTransaction> transactions,
         GregorianCalendar executionDate) {
