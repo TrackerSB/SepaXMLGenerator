@@ -70,14 +70,14 @@ public class SepaPain00800109Generator extends SepaGenerator {
                                 sepaDocumentDescription.executionDate()));
                 {
                     PartyIdentification135 cdtr = new PartyIdentification135();
-                    cdtr.setNm(sepaDocumentDescription.creditor().accountHolder().name());
+                    cdtr.setNm(sepaDocumentDescription.creditor().collector().name());
                     pmtInf.setCdtr(cdtr);
                 }
                 {
                     CashAccount38 cdtrAcct = new CashAccount38();
                     {
                         AccountIdentification4Choice id = new AccountIdentification4Choice();
-                        id.setIBAN(sepaDocumentDescription.creditor().accountHolder().iban().value());
+                        id.setIBAN(sepaDocumentDescription.creditor().collector().iban().value());
                         cdtrAcct.setId(id);
                     }
                     pmtInf.setCdtrAcct(cdtrAcct);

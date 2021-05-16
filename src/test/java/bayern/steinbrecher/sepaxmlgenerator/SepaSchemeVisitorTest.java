@@ -31,10 +31,10 @@ public class SepaSchemeVisitorTest {
                 "msgId",
                 new Creditor(
                         "JM-0815",
-                        "DE98ZZZ09999999999",
                         new AccountHolder("Joe", "Moneymaker",
                                 new IBAN("DE91100000000123456789"),
-                                new BIC("MARKDEF1180"))
+                                new BIC("MARKDEF1180")),
+                        "DE98ZZZ09999999999"
                 ),
                 List.of(
                         new DirectDebitTransaction(
