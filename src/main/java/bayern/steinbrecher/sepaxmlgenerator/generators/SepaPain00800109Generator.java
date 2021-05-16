@@ -2,6 +2,7 @@ package bayern.steinbrecher.sepaxmlgenerator.generators;
 
 import bayern.steinbrecher.sepaxmlgenerator.DirectDebitTransaction;
 import bayern.steinbrecher.sepaxmlgenerator.GenerationFailedException;
+import bayern.steinbrecher.sepaxmlgenerator.IBAN;
 import bayern.steinbrecher.sepaxmlgenerator.SepaDocumentDescription;
 import bayern.steinbrecher.sepaxmlgenerator.SepaGenerator;
 import bayern.steinbrecher.sepaxmlgenerator.sepatypes.pain00800109.AccountIdentification4Choice;
@@ -31,6 +32,8 @@ import java.util.GregorianCalendar;
  */
 public class SepaPain00800109Generator extends SepaGenerator {
     private static final DatatypeFactory datatypeFactory;
+    private static final BranchAndFinancialInstitutionIdentification6 NOT_PROVIDED_BANK
+            = new BranchAndFinancialInstitutionIdentification6();
 
     static {
         try {
@@ -38,10 +41,56 @@ public class SepaPain00800109Generator extends SepaGenerator {
         } catch (DatatypeConfigurationException ex) {
             throw new ExceptionInInitializerError(ex);
         }
+
+        FinancialInstitutionIdentification18 finInstnId = new FinancialInstitutionIdentification18();
+        {
+            GenericFinancialIdentification1 othr = new GenericFinancialIdentification1();
+            othr.setId("NOTPROVIDED");
+            finInstnId.setOthr(othr);
+        }
+        NOT_PROVIDED_BANK.setFinInstnId(finInstnId);
     }
 
     public SepaPain00800109Generator() {
         super("pain.008.001.09.xsd");
+    }
+
+    private CashAccount38 convert(IBAN iban) {
+        CashAccount38 cashAccount = new CashAccount38();
+        AccountIdentification4Choice id = new AccountIdentification4Choice();
+        id.setIBAN(iban.value());
+        cashAccount.setId(id);
+        return cashAccount;
+    }
+
+    private DirectDebitTransactionInformation23 convert(DirectDebitTransaction transaction){
+        DirectDebitTransactionInformation23 transactionInfo = new DirectDebitTransactionInformation23();
+        {
+            PaymentIdentification6 pmtId = new PaymentIdentification6();
+            pmtId.setEndToEndId("NOTPROVIDED");
+            transactionInfo.setPmtId(pmtId);
+        }
+        {
+            ActiveOrHistoricCurrencyAndAmount instdAmt = new ActiveOrHistoricCurrencyAndAmount();
+            instdAmt.setCcy("EUR");
+            instdAmt.setValue(BigDecimal.valueOf(transaction.amount()));
+            transactionInfo.setInstdAmt(instdAmt);
+        }
+        transactionInfo.setDbtrAgt(NOT_PROVIDED_BANK);
+        {
+            PartyIdentification135 dbtr = new PartyIdentification135();
+            dbtr.setNm(transaction.mandate().accountHolder().name());
+            transactionInfo.setDbtr(dbtr);
+        }
+        transactionInfo.setDbtrAcct(convert(transaction.mandate().accountHolder().iban()));
+        {
+            RemittanceInformation16 rmtInf = new RemittanceInformation16();
+            rmtInf.getUstrd()
+                    .add(transaction.purpose());
+            transactionInfo.setRmtInf(rmtInf);
+        }
+
+        return transactionInfo;
     }
 
     @Override
@@ -73,78 +122,12 @@ public class SepaPain00800109Generator extends SepaGenerator {
                     cdtr.setNm(sepaDocumentDescription.creditor().collector().name());
                     pmtInf.setCdtr(cdtr);
                 }
-                {
-                    CashAccount38 cdtrAcct = new CashAccount38();
-                    {
-                        AccountIdentification4Choice id = new AccountIdentification4Choice();
-                        id.setIBAN(sepaDocumentDescription.creditor().collector().iban().value());
-                        cdtrAcct.setId(id);
-                    }
-                    pmtInf.setCdtrAcct(cdtrAcct);
-                }
-                {
-                    BranchAndFinancialInstitutionIdentification6 cdtrAgt
-                            = new BranchAndFinancialInstitutionIdentification6();
-                    {
-                        FinancialInstitutionIdentification18 finInstnId = new FinancialInstitutionIdentification18();
-                        {
-                            GenericFinancialIdentification1 othr = new GenericFinancialIdentification1();
-                            othr.setId("NOTPROVIDED");
-                            finInstnId.setOthr(othr);
-                        }
-                        cdtrAgt.setFinInstnId(finInstnId);
-                    }
-                    pmtInf.setCdtrAgt(cdtrAgt);
-                }
+                pmtInf.setCdtrAcct(convert(sepaDocumentDescription.creditor().collector().iban()));
+                pmtInf.setCdtrAgt(NOT_PROVIDED_BANK);
+
                 for (DirectDebitTransaction transaction : sepaDocumentDescription.transactions()) {
-                    DirectDebitTransactionInformation23 transactionInfo = new DirectDebitTransactionInformation23();
-                    {
-                        PaymentIdentification6 pmtId = new PaymentIdentification6();
-                        pmtId.setEndToEndId("NOTPROVIDED");
-                        transactionInfo.setPmtId(pmtId);
-                    }
-                    {
-                        ActiveOrHistoricCurrencyAndAmount instdAmt = new ActiveOrHistoricCurrencyAndAmount();
-                        instdAmt.setCcy("EUR");
-                        instdAmt.setValue(BigDecimal.valueOf(transaction.amount()));
-                        transactionInfo.setInstdAmt(instdAmt);
-                    }
-                    {
-                        BranchAndFinancialInstitutionIdentification6 dbtrAgt
-                                = new BranchAndFinancialInstitutionIdentification6();
-                        {
-                            FinancialInstitutionIdentification18 finInstnId = new FinancialInstitutionIdentification18();
-                            {
-                                GenericFinancialIdentification1 othr = new GenericFinancialIdentification1();
-                                othr.setId("NOTPROVIDED");
-                                finInstnId.setOthr(othr);
-                            }
-                            dbtrAgt.setFinInstnId(finInstnId);
-                        }
-                        transactionInfo.setDbtrAgt(dbtrAgt);
-                    }
-                    {
-                        PartyIdentification135 dbtr = new PartyIdentification135();
-                        dbtr.setNm(transaction.mandate().accountHolder().name());
-                        transactionInfo.setDbtr(dbtr);
-                    }
-                    {
-                        CashAccount38 dbtrAcct = new CashAccount38();
-                        {
-                            AccountIdentification4Choice id = new AccountIdentification4Choice();
-                            id.setIBAN(transaction.mandate().accountHolder().iban().value());
-                            dbtrAcct.setId(id);
-                        }
-                        transactionInfo.setDbtrAcct(dbtrAcct);
-                    }
-                    {
-                        RemittanceInformation16 rmtInf = new RemittanceInformation16();
-                        rmtInf.getUstrd()
-                                .add(transaction.purpose());
-                        transactionInfo.setRmtInf(rmtInf);
-                    }
                     pmtInf.getDrctDbtTxInf()
-                            .add(transactionInfo);
+                            .add(convert(transaction));
                 }
                 cstmrDrctDbtInitn.getPmtInf()
                         .add(pmtInf);
