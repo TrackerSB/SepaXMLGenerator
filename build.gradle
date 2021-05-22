@@ -65,7 +65,7 @@ publishing {
             pom {
                 name = "${project.name}"
                 description = 'A library for generating multiple SEPA standard XML files from an abstract description'
-                url = 'https://github.com/TrackerSB/SepaXMLGenerator'
+                url = 'https://steinbrecher.bayern'
                 licenses {
                     license {
                         name = 'The Beer-Ware License (Revision 42)'
@@ -81,7 +81,7 @@ publishing {
                 scm {
                     connection = 'scm:git:git://github.com/TrackerSB/SepaXMLGenerator.git'
                     developerConnection = 'scm:git:ssh://github.com/TrackerSB/SepaXMLGenerator.git'
-                    url = 'https://steinbrecher.bayern'
+                    url = 'https://github.com/TrackerSB/SepaXMLGenerator'
                 }
             }
             from components.java
