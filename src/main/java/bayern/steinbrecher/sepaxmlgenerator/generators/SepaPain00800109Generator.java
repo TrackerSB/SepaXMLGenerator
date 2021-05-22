@@ -63,7 +63,7 @@ public class SepaPain00800109Generator extends SepaGenerator {
         return cashAccount;
     }
 
-    private DirectDebitTransactionInformation23 convert(DirectDebitTransaction transaction){
+    private DirectDebitTransactionInformation23 convert(DirectDebitTransaction transaction) {
         DirectDebitTransactionInformation23 transactionInfo = new DirectDebitTransactionInformation23();
         {
             PaymentIdentification6 pmtId = new PaymentIdentification6();
@@ -94,14 +94,14 @@ public class SepaPain00800109Generator extends SepaGenerator {
     }
 
     @Override
-    public String generateXML(SepaDocumentDescription sepaDocumentDescription) throws GenerationFailedException {
+    protected String generateXMLImpl(SepaDocumentDescription sepaDocumentDescription) throws GenerationFailedException {
         Document document = new Document();
         {
             CustomerDirectDebitInitiationV09 cstmrDrctDbtInitn = new CustomerDirectDebitInitiationV09();
             {
                 GroupHeader83 grpHdr = new GroupHeader83();
                 grpHdr.setCreDtTm(datatypeFactory.newXMLGregorianCalendar(new GregorianCalendar()));
-                grpHdr.setMsgId(sepaDocumentDescription.msgId());
+                grpHdr.setMsgId(sepaDocumentDescription.msgId().value());
                 grpHdr.setNbOfTxs(String.valueOf(sepaDocumentDescription.transactions().size()));
                 {
                     PartyIdentification135 initgPty = new PartyIdentification135();

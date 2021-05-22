@@ -15,6 +15,11 @@ import javax.xml.validation.Validator;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.RecordComponent;
+import java.util.ArrayDeque;
+import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +28,7 @@ import java.util.logging.Logger;
  * @since 0.1
  */
 public abstract class SepaGenerator {
+
     private static final Logger LOGGER = Logger.getLogger(SepaPain00800109Generator.class.getName());
     private static final SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
     private final Validator validator;
@@ -37,7 +43,7 @@ public abstract class SepaGenerator {
         validator = schema.newValidator();
     }
 
-    protected String generateXML(Object xmlRootElement) throws GenerationFailedException {
+    protected final String generateXML(Object xmlRootElement) throws GenerationFailedException {
         StringWriter xmlWriter = new StringWriter();
         try {
             JAXBContext context = JAXBContext.newInstance(Document.class);
@@ -50,7 +56,54 @@ public abstract class SepaGenerator {
         return xmlWriter.toString();
     }
 
-    public abstract String generateXML(SepaDocumentDescription sepaDocumentDescription) throws GenerationFailedException;
+    public final String generateXML(SepaDocumentDescription sepaDocumentDescription)
+            throws GenerationFailedException {
+        if (validateDescription(sepaDocumentDescription)) {
+            return generateXMLImpl(sepaDocumentDescription);
+        }
+        throw new IllegalArgumentException("The given SEPA document description is invalid");
+    }
+
+    protected abstract String generateXMLImpl(SepaDocumentDescription sepaDocumentDescription)
+            throws GenerationFailedException;
+
+    /**
+     * Check whether the given SEPA document description is valid. The checked validity constraints partially exceed
+     * the validity constraints of any XSD (e.g. checksums of IBANs or legal conditions for dates).
+     */
+    public static boolean validateDescription(SepaDocumentDescription sepaDocumentDescription) {
+        Queue<Object> toValidate = new ArrayDeque<>();
+        toValidate.add(sepaDocumentDescription);
+        while (!toValidate.isEmpty()) {
+            // Validate current element
+            Object current = toValidate.remove();
+            if (current instanceof Validatable) {
+                if (!((Validatable) current).isValid()) {
+                    LOGGER.log(Level.INFO, String.format("%s is invalid", current));
+                    return false;
+                }
+            }
+
+            // Append its record entries
+            Class<?> currentClass = current.getClass();
+            if (currentClass.isRecord()) {
+                RecordComponent[] recordComponents = currentClass.getRecordComponents();
+                for (RecordComponent component : recordComponents) {
+                    Method accessor = component.getAccessor();
+                    try {
+                        Object recordMember = accessor.invoke(current);
+                        toValidate.add(recordMember);
+                    } catch (IllegalAccessException | InvocationTargetException ex) {
+                        LOGGER.log(Level.SEVERE,
+                                String.format("Could not retrieve member of record %s with %s",
+                                        currentClass.getName(), accessor.getName()),
+                                ex);
+                    }
+                }
+            }
+        }
+        return true;
+    }
 
     public boolean validateXML(String xml) {
         try {

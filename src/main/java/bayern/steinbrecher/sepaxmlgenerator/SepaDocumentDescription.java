@@ -11,8 +11,12 @@ import java.util.GregorianCalendar;
  */
 @RecordBuilder
 public record SepaDocumentDescription(
-        String msgId,
+        MessageId msgId,
         Creditor creditor,
         Collection<DirectDebitTransaction> transactions,
         GregorianCalendar executionDate) {
+    /**
+     * The maximum length of the name of the party creating the SEPA Direct Debit.
+     */
+    private static final int MAX_CHAR_NAME_FIELD = 70;
 }

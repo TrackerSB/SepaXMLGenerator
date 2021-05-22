@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Calendar;
@@ -28,13 +27,13 @@ public class SepaSchemeVisitorTest {
         executionDate.add(Calendar.WEEK_OF_YEAR, 1);
 
         SepaDocumentDescription sepaDocumentDescription = new SepaDocumentDescription(
-                "msgId",
+                new MessageId("msgId"),
                 new Creditor(
                         "JM-0815",
                         new AccountHolder("Joe", "Moneymaker",
                                 new IBAN("DE91100000000123456789"),
                                 new BIC("MARKDEF1180")),
-                        "DE98ZZZ09999999999"
+                        new CreditorId("DE98ZZZ09999999999")
                 ),
                 List.of(
                         new DirectDebitTransaction(
@@ -55,6 +54,7 @@ public class SepaSchemeVisitorTest {
                         )
                 ),
                 executionDate);
+        Assert.assertTrue(SepaGenerator.validateDescription(sepaDocumentDescription));
         String generatedXML = GENERATOR.generateXML(sepaDocumentDescription);
         System.out.println("generatedXML =\n" + generatedXML);
         Files.writeString(Path.of("C:/Users/stefa/Desktop/test.xml"), generatedXML, StandardCharsets.UTF_8,
