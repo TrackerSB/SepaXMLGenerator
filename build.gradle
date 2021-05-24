@@ -21,6 +21,12 @@ dependencies {
     testImplementation 'org.testng:testng:7.4.0'
 }
 
+java {
+    modularity.inferModulePath = true
+    withSourcesJar()
+    withJavadocJar()
+}
+
 test {
     useTestNG()
 }
