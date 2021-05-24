@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'bayern.steinbrecher'
-version '0.1-rc1-SNAPSHOT'
+version '0.1-rc2-SNAPSHOT'
 
 repositories {
     mavenCentral()
