@@ -14,7 +14,8 @@ public record SepaDocumentDescription(
         MessageId msgId,
         Creditor creditor,
         Collection<DirectDebitTransaction> transactions,
-        GregorianCalendar executionDate) {
+        GregorianCalendar executionDate
+) {
     /**
      * The maximum length of the name of the party creating the SEPA Direct Debit.
      */

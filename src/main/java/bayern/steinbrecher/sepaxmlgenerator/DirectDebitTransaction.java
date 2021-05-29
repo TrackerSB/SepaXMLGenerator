@@ -7,5 +7,9 @@ import io.soabase.recordbuilder.core.RecordBuilder;
  * @since 0.1
  */
 @RecordBuilder
-public record DirectDebitTransaction(DirectDebitMandate mandate, String purpose, double amount) {
+public record DirectDebitTransaction(
+        DirectDebitMandate mandate,
+        String purpose,
+        double amount
+) {
 }

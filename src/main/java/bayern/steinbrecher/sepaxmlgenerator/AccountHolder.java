@@ -7,7 +7,12 @@ import io.soabase.recordbuilder.core.RecordBuilder;
  * @since 0.1
  */
 @RecordBuilder
-public record AccountHolder(String firstname, String lastname, IBAN iban, BIC bic) {
+public record AccountHolder(
+        String firstname,
+        String lastname,
+        IBAN iban,
+        BIC bic
+) {
     public String name() {
         return lastname() + ", " + firstname();
     }

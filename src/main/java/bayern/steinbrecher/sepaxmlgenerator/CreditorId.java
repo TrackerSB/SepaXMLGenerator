@@ -7,7 +7,9 @@ import io.soabase.recordbuilder.core.RecordBuilder;
  * @since 0.1
  */
 @RecordBuilder
-public record CreditorId(String value) implements Validatable {
+public record CreditorId(
+        String value
+) implements Validatable {
     private static final String SEPA_BUSINESS_CODE = "ZZZ";
 
     public boolean isValid() {

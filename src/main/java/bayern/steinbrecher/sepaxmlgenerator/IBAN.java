@@ -10,7 +10,9 @@ import java.util.regex.Pattern;
  * @since 0.1
  */
 @RecordBuilder
-public record IBAN(String value) implements Validatable {
+public record IBAN(
+        String value
+) implements Validatable {
     /**
      * The maximum length of an IBAN.
      */
@@ -36,7 +38,7 @@ public record IBAN(String value) implements Validatable {
             = "[A-Z]{" + SEPA_CC_LENGTH + "}\\d{2," + (MAX_CHAR_IBAN - SEPA_CC_LENGTH) + "}";
     private static final Pattern IBAN_PATTERN = Pattern.compile(IBAN_REGEX);
 
-    public boolean isValid(){
+    public boolean isValid() {
         boolean isValid = false;
         if (value() != null && !value().isEmpty()) {
             String trimmedIban = value().replace(" ", "");

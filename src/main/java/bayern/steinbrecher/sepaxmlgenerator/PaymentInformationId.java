@@ -7,7 +7,9 @@ import io.soabase.recordbuilder.core.RecordBuilder;
  * @since 0.1
  */
 @RecordBuilder
-public record PaymentInformationId(String value) implements Validatable {
+public record PaymentInformationId(
+        String value
+) implements Validatable {
     /**
      * The count of months the PmtInfId has to be unique.
      */

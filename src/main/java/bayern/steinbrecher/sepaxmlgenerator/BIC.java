@@ -9,7 +9,9 @@ import java.util.regex.Pattern;
  * @since 0.1
  */
 @RecordBuilder
-public record BIC(String value) implements Validatable {
+public record BIC(
+        String value
+) implements Validatable {
     /**
      * Regex representing all valid BICs.
      */

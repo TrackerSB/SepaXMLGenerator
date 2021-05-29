@@ -7,5 +7,8 @@ import io.soabase.recordbuilder.core.RecordBuilder;
  * @since 0.1
  */
 @RecordBuilder
-public record DirectDebitMandate(String id, AccountHolder accountHolder) {
+public record DirectDebitMandate(
+        String id,
+        AccountHolder accountHolder
+) {
 }

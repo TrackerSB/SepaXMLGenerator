@@ -7,5 +7,8 @@ import io.soabase.recordbuilder.core.RecordBuilder;
  * @since 0.1
  */
 @RecordBuilder
-public record Bank(String name, BIC bic) {
+public record Bank(
+        String name,
+        BIC bic
+) {
 }

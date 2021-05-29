@@ -9,7 +9,9 @@ import java.util.regex.Pattern;
  * @since 0.1
  */
 @RecordBuilder
-public record MessageId(String value) implements Validatable {
+public record MessageId(
+        String value
+) implements Validatable {
     /**
      * The count of days the MessageId has to be unique.
      */
