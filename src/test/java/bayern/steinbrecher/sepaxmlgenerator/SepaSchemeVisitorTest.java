@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -40,7 +41,8 @@ public class SepaSchemeVisitorTest {
                                 new DirectDebitMandate("personA",
                                         new AccountHolder("Mary", "Jason",
                                                 new IBAN("DE89370400440532013000"),
-                                                new BIC("COBADEFFXXX"))),
+                                                new BIC("COBADEFFXXX")),
+                                        LocalDate.of(2010, 05, 13)),
                                 "Your bill",
                                 42.42
                         ),
@@ -48,7 +50,8 @@ public class SepaSchemeVisitorTest {
                                 new DirectDebitMandate("personB",
                                         new AccountHolder("Jimmy", "James",
                                                 new IBAN("DE27100777770209299700"),
-                                                new BIC("DEUTDE2H264"))),
+                                                new BIC("DEUTDE2H264")),
+                                        LocalDate.of(2000, 1, 1)),
                                 "Another bill",
                                 13.37
                         )

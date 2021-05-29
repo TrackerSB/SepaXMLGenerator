@@ -79,10 +79,10 @@ public class SepaPain00800109Generator extends SepaGenerator {
         transactionInfo.setDbtrAgt(NOT_PROVIDED_BANK);
         {
             PartyIdentification135 dbtr = new PartyIdentification135();
-            dbtr.setNm(transaction.mandate().accountHolder().name());
+            dbtr.setNm(transaction.mandate().owner().name());
             transactionInfo.setDbtr(dbtr);
         }
-        transactionInfo.setDbtrAcct(convert(transaction.mandate().accountHolder().iban()));
+        transactionInfo.setDbtrAcct(convert(transaction.mandate().owner().iban()));
         {
             RemittanceInformation16 rmtInf = new RemittanceInformation16();
             rmtInf.getUstrd()
