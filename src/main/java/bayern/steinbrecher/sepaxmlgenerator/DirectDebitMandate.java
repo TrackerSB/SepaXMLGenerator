@@ -2,6 +2,8 @@ package bayern.steinbrecher.sepaxmlgenerator;
 
 import io.soabase.recordbuilder.core.RecordBuilder;
 
+import java.time.LocalDate;
+
 /**
  * @author Stefan Huber
  * @since 0.1
@@ -9,6 +11,7 @@ import io.soabase.recordbuilder.core.RecordBuilder;
 @RecordBuilder
 public record DirectDebitMandate(
         String id,
-        AccountHolder accountHolder
+        AccountHolder owner,
+        LocalDate signed
 ) implements DirectDebitMandateBuilder.With {
 }
