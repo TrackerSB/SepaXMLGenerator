@@ -12,7 +12,7 @@ public record AccountHolder(
         String lastname,
         IBAN iban,
         BIC bic
-) {
+) implements AccountHolderBuilder.With {
     public String name() {
         return lastname() + ", " + firstname();
     }

@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 @RecordBuilder
 public record BIC(
         String value
-) implements Validatable {
+) implements BICBuilder.With, Validatable {
     /**
      * Regex representing all valid BICs.
      */

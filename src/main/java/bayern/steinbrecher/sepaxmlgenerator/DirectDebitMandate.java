@@ -10,5 +10,5 @@ import io.soabase.recordbuilder.core.RecordBuilder;
 public record DirectDebitMandate(
         String id,
         AccountHolder accountHolder
-) {
+) implements DirectDebitMandateBuilder.With {
 }

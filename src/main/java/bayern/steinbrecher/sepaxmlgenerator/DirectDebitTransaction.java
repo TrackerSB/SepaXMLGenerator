@@ -11,5 +11,5 @@ public record DirectDebitTransaction(
         DirectDebitMandate mandate,
         String purpose,
         double amount
-) {
+) implements DirectDebitTransactionBuilder.With {
 }

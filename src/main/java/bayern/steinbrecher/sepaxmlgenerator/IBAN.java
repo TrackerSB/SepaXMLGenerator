@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 @RecordBuilder
 public record IBAN(
         String value
-) implements Validatable {
+) implements IBANBuilder.With, Validatable {
     /**
      * The maximum length of an IBAN.
      */

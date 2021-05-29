@@ -9,7 +9,7 @@ import io.soabase.recordbuilder.core.RecordBuilder;
 @RecordBuilder
 public record CreditorId(
         String value
-) implements Validatable {
+) implements CreditorIdBuilder.With, Validatable {
     private static final String SEPA_BUSINESS_CODE = "ZZZ";
 
     public boolean isValid() {

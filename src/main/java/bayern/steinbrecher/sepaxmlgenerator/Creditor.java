@@ -11,5 +11,5 @@ public record Creditor(
         String collectorId,
         AccountHolder collector,
         CreditorId creditorId
-) {
+) implements CreditorBuilder.With {
 }

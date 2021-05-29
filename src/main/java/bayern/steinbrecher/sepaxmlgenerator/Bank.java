@@ -10,5 +10,5 @@ import io.soabase.recordbuilder.core.RecordBuilder;
 public record Bank(
         String name,
         BIC bic
-) {
+) implements BankBuilder.With {
 }

@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 @RecordBuilder
 public record MessageId(
         String value
-) implements Validatable {
+) implements MessageIdBuilder.With, Validatable {
     /**
      * The count of days the MessageId has to be unique.
      */

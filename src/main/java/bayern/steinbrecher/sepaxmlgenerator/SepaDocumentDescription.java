@@ -15,7 +15,7 @@ public record SepaDocumentDescription(
         Creditor creditor,
         Collection<DirectDebitTransaction> transactions,
         GregorianCalendar executionDate
-) {
+) implements SepaDocumentDescriptionBuilder.With {
     /**
      * The maximum length of the name of the party creating the SEPA Direct Debit.
      */
