@@ -25,7 +25,7 @@ public record SepaDocumentDescription(
     /**
      * The maximum length of the name of the party creating the SEPA Direct Debit.
      */
-    private static final int MAX_CHAR_NAME_FIELD = 70;
+    public static final int MAX_CHAR_NAME_FIELD = 70;
     private static final Logger LOGGER = Logger.getLogger(SepaDocumentDescription.class.getName());
 
     @Override

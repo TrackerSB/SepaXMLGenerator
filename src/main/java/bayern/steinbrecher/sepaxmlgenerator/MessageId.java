@@ -15,17 +15,17 @@ public record MessageId(
     /**
      * The count of days the MessageId has to be unique.
      */
-    private static final int UNIQUE_DAYS_MESSAGEID = 15;
+    public static final int UNIQUE_DAYS_MESSAGEID = 15;
     /**
      * The maximum length of the message id.
      */
-    private static final int MAX_CHAR_MESSAGE_ID = 35;
+    public static final int MAX_CHAR_MESSAGE_ID = 35;
     /**
      * Regex for checking whether a message id is valid. Which characters are supported by Sepa is taken from
      * http://www.sepaforcorporates.com/sepa-implementation/valid-xml-characters-sepa-payments/
      */
-    private static final String MESSAGE_ID_REGEX = "([a-zA-Z0-9]|/| |-|\\?|:|\\(|\\)|\\.|,|'|\\+)*";
-    private static final Pattern MESSAGE_ID_PATTERN = Pattern.compile(MESSAGE_ID_REGEX);
+    public static final String MESSAGE_ID_REGEX = "([a-zA-Z0-9]|/| |-|\\?|:|\\(|\\)|\\.|,|'|\\+)*";
+    public static final Pattern MESSAGE_ID_PATTERN = Pattern.compile(MESSAGE_ID_REGEX);
 
     public boolean isValid() {
         return value() != null
