@@ -16,7 +16,7 @@ public record IBAN(
     /**
      * The maximum length of an IBAN.
      */
-    private static final int MAX_CHAR_IBAN = 34;
+    public static final int MAX_CHAR_IBAN = 34;
     /**
      * Length of country code (CC);
      */
@@ -34,9 +34,9 @@ public record IBAN(
     /**
      * Regex describing a possible valid IBAN (the checksum of the IBAN is not checked by this regex).
      */
-    private static final String IBAN_REGEX
+    public static final String IBAN_REGEX
             = "[A-Z]{" + SEPA_CC_LENGTH + "}\\d{2," + (MAX_CHAR_IBAN - SEPA_CC_LENGTH) + "}";
-    private static final Pattern IBAN_PATTERN = Pattern.compile(IBAN_REGEX);
+    public static final Pattern IBAN_PATTERN = Pattern.compile(IBAN_REGEX);
 
     public boolean isValid() {
         boolean isValid = false;
