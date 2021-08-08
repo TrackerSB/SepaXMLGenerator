@@ -16,7 +16,7 @@ repositories {
 dependencies {
     annotationProcessor 'io.soabase.record-builder:record-builder-processor:22'
     compileOnly 'io.soabase.record-builder:record-builder-core:22'
-    implementation('com.sun.xml.bind:jaxb-ri:3.0.2'){
+    implementation('com.sun.xml.bind:jaxb-ri:3.0.2') {
         exclude group: 'com.sun.xml.bind', module: 'jaxb-release-documentation'
         exclude group: 'com.sun.xml.bind', module: 'jaxb-samples'
     }
