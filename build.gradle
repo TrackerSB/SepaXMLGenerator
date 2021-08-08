@@ -19,6 +19,7 @@ dependencies {
     implementation('com.sun.xml.bind:jaxb-ri:3.0.2') {
         exclude group: 'com.sun.xml.bind', module: 'jaxb-release-documentation'
         exclude group: 'com.sun.xml.bind', module: 'jaxb-samples'
+        exclude group: 'com.sun.xml.bind', module: 'jaxb-jxc'
     }
 
     testImplementation 'org.testng:testng:7.4.0'
