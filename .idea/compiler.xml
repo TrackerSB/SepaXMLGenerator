@@ -5,9 +5,9 @@
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.soabase.record-builder/record-builder-processor/1.19/3e43080b0ddebb62f4192d043f4b783ad896d99d/record-builder-processor-1.19.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.soabase.record-builder/record-builder-processor/22/6b575d211197743f71c6eabd5defd4e1aa23f1ae/record-builder-processor-22.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup/javapoet/1.12.1/e0e49f502697522ef047470b117ff81edc9f9a07/javapoet-1.12.1.jar" />
-          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.soabase.record-builder/record-builder-core/1.19/3aeca9c05d1e3457a34c1b5db4bb27b12779e604/record-builder-core-1.19.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.soabase.record-builder/record-builder-core/22/7022a195366b13b289ea490a166cad9c0badf42d/record-builder-core-22.jar" />
         </processorPath>
         <module name="SepaXMLGenerator.main" />
       </profile>

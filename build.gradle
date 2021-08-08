@@ -14,8 +14,8 @@ repositories {
 }
 
 dependencies {
-    annotationProcessor 'io.soabase.record-builder:record-builder-processor:1.19'
-    compileOnly 'io.soabase.record-builder:record-builder-core:1.19'
+    annotationProcessor 'io.soabase.record-builder:record-builder-processor:22'
+    compileOnly 'io.soabase.record-builder:record-builder-core:22'
     implementation 'com.sun.xml.bind:jaxb-xjc:3.0.2'
     implementation 'com.sun.xml.bind:jaxb-ri:3.0.2'
 
@@ -42,10 +42,6 @@ buildConfig {
 compileJava {
     options.encoding = 'UTF-8'
     options.release = 16
-    options.compilerArgs = [
-            // FIXME Use $moduleName or similar
-            "--add-reads", "bayern.steinbrecher.SepaXMLGenerator=ALL-UNNAMED"
-    ]
 }
 
 javadoc {
