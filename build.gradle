@@ -16,12 +16,8 @@ repositories {
 dependencies {
     annotationProcessor 'io.soabase.record-builder:record-builder-processor:1.19'
     compileOnly 'io.soabase.record-builder:record-builder-core:1.19'
-    // FIXME How to include Jakarta correctly?
-    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'
-    implementation 'com.sun.xml.bind:jaxb-xjc:3.0.1'
-    implementation 'com.sun.xml.bind:jaxb-core:3.0.1'
-    implementation 'com.sun.xml.bind:jaxb-impl:3.0.1'
-    runtimeOnly 'org.glassfish.jaxb:jaxb-runtime:3.0.1'
+    implementation 'com.sun.xml.bind:jaxb-xjc:3.0.2'
+    implementation 'com.sun.xml.bind:jaxb-ri:3.0.2'
 
     testImplementation 'org.testng:testng:7.4.0'
 }
