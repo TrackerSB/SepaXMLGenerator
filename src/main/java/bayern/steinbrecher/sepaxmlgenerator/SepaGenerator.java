@@ -46,7 +46,7 @@ public abstract class SepaGenerator {
     protected final String generateXML(Object xmlRootElement) throws GenerationFailedException {
         StringWriter xmlWriter = new StringWriter();
         try {
-            JAXBContext context = JAXBContext.newInstance(Document.class);
+            JAXBContext context = org.glassfish.jaxb.runtime.v2.ContextFactory.createContext(new Class[]{Document.class}, null);
             Marshaller m = context.createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             m.marshal(xmlRootElement, xmlWriter);
