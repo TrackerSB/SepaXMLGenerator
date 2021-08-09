@@ -8,4 +8,6 @@ module bayern.steinbrecher.SepaXMLGenerator {
     requires java.compiler;
     requires java.logging;
     requires java.xml;
+
+    opens bayern.steinbrecher.sepaxmlgenerator.sepatypes.pain00800109 to com.sun.xml.bind;
 }
