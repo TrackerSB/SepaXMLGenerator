@@ -5,7 +5,7 @@ import bayern.steinbrecher.sepaxmlgenerator.GenerationFailedException;
 import bayern.steinbrecher.sepaxmlgenerator.IBAN;
 import bayern.steinbrecher.sepaxmlgenerator.SepaDocumentDescription;
 import bayern.steinbrecher.sepaxmlgenerator.SepaGenerator;
-import bayern.steinbrecher.sepaxmlgenerator.sepatypes.pain00800109.*;
+import bayern.steinbrecher.sepaxmlgenerator.sepatypes.pain00800102.*;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -16,10 +16,10 @@ import java.util.GregorianCalendar;
  * @author Stefan Huber
  * @since 0.1
  */
-public class SepaPain00800109Generator extends SepaGenerator {
+public class SepaPain00800102Generator extends SepaGenerator {
     private static final DatatypeFactory datatypeFactory;
-    private static final BranchAndFinancialInstitutionIdentification6 NOT_PROVIDED_BANK
-            = new BranchAndFinancialInstitutionIdentification6();
+    private static final BranchAndFinancialInstitutionIdentification4 NOT_PROVIDED_BANK
+            = new BranchAndFinancialInstitutionIdentification4();
 
     static {
         try {
@@ -28,7 +28,7 @@ public class SepaPain00800109Generator extends SepaGenerator {
             throw new ExceptionInInitializerError(ex);
         }
 
-        FinancialInstitutionIdentification18 finInstnId = new FinancialInstitutionIdentification18();
+        FinancialInstitutionIdentification7 finInstnId = new FinancialInstitutionIdentification7();
         {
             GenericFinancialIdentification1 othr = new GenericFinancialIdentification1();
             othr.setId("NOTPROVIDED");
@@ -37,8 +37,8 @@ public class SepaPain00800109Generator extends SepaGenerator {
         NOT_PROVIDED_BANK.setFinInstnId(finInstnId);
     }
 
-    public SepaPain00800109Generator() {
-        super("pain.008.001.09.xsd");
+    public SepaPain00800102Generator() {
+        super("pain.008.001.02.xsd");
     }
 
     @Override
@@ -46,18 +46,18 @@ public class SepaPain00800109Generator extends SepaGenerator {
         return Document.class;
     }
 
-    private CashAccount38 convert(IBAN iban) {
-        CashAccount38 cashAccount = new CashAccount38();
+    private CashAccount16 convert(IBAN iban) {
+        CashAccount16 cashAccount = new CashAccount16();
         AccountIdentification4Choice id = new AccountIdentification4Choice();
         id.setIBAN(iban.value());
         cashAccount.setId(id);
         return cashAccount;
     }
 
-    private DirectDebitTransactionInformation23 convert(DirectDebitTransaction transaction) {
-        DirectDebitTransactionInformation23 transactionInfo = new DirectDebitTransactionInformation23();
+    private DirectDebitTransactionInformation9 convert(DirectDebitTransaction transaction) {
+        DirectDebitTransactionInformation9 transactionInfo = new DirectDebitTransactionInformation9();
         {
-            PaymentIdentification6 pmtId = new PaymentIdentification6();
+            PaymentIdentification1 pmtId = new PaymentIdentification1();
             pmtId.setEndToEndId("NOTPROVIDED");
             transactionInfo.setPmtId(pmtId);
         }
@@ -69,13 +69,13 @@ public class SepaPain00800109Generator extends SepaGenerator {
         }
         transactionInfo.setDbtrAgt(NOT_PROVIDED_BANK);
         {
-            PartyIdentification135 dbtr = new PartyIdentification135();
+            PartyIdentification32 dbtr = new PartyIdentification32();
             dbtr.setNm(transaction.mandate().owner().name());
             transactionInfo.setDbtr(dbtr);
         }
         transactionInfo.setDbtrAcct(convert(transaction.mandate().owner().iban()));
         {
-            RemittanceInformation16 rmtInf = new RemittanceInformation16();
+            RemittanceInformation5 rmtInf = new RemittanceInformation5();
             rmtInf.getUstrd()
                     .add(transaction.purpose());
             transactionInfo.setRmtInf(rmtInf);
@@ -88,20 +88,20 @@ public class SepaPain00800109Generator extends SepaGenerator {
     protected String generateXMLImpl(SepaDocumentDescription sepaDocumentDescription) throws GenerationFailedException {
         Document document = new Document();
         {
-            CustomerDirectDebitInitiationV09 cstmrDrctDbtInitn = new CustomerDirectDebitInitiationV09();
+            CustomerDirectDebitInitiationV02 cstmrDrctDbtInitn = new CustomerDirectDebitInitiationV02();
             {
-                GroupHeader83 grpHdr = new GroupHeader83();
+                GroupHeader39 grpHdr = new GroupHeader39();
                 grpHdr.setCreDtTm(datatypeFactory.newXMLGregorianCalendar(new GregorianCalendar()));
                 grpHdr.setMsgId(sepaDocumentDescription.msgId().value());
                 grpHdr.setNbOfTxs(String.valueOf(sepaDocumentDescription.transactions().size()));
                 {
-                    PartyIdentification135 initgPty = new PartyIdentification135();
+                    PartyIdentification32 initgPty = new PartyIdentification32();
                     grpHdr.setInitgPty(initgPty);
                 }
                 cstmrDrctDbtInitn.setGrpHdr(grpHdr);
             }
             {
-                PaymentInstruction37 pmtInf = new PaymentInstruction37();
+                PaymentInstructionInformation4 pmtInf = new PaymentInstructionInformation4();
                 pmtInf.setPmtInfId(sepaDocumentDescription.creditor().collectorId());
                 pmtInf.setPmtMtd(PaymentMethod2Code.DD);
                 pmtInf.setBtchBookg(true);
@@ -109,7 +109,7 @@ public class SepaPain00800109Generator extends SepaGenerator {
                         datatypeFactory.newXMLGregorianCalendar(
                                 sepaDocumentDescription.executionDate()));
                 {
-                    PartyIdentification135 cdtr = new PartyIdentification135();
+                    PartyIdentification32 cdtr = new PartyIdentification32();
                     cdtr.setNm(sepaDocumentDescription.creditor().collector().name());
                     pmtInf.setCdtr(cdtr);
                 }

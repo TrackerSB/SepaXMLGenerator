@@ -1,10 +1,11 @@
 package bayern.steinbrecher.sepaxmlgenerator;
 
+import bayern.steinbrecher.sepaxmlgenerator.generators.SepaPain00800102Generator;
 import bayern.steinbrecher.sepaxmlgenerator.generators.SepaPain00800109Generator;
-import bayern.steinbrecher.sepaxmlgenerator.sepatypes.pain00800109.Document;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
+import org.glassfish.jaxb.runtime.v2.ContextFactory;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -43,10 +44,12 @@ public abstract class SepaGenerator {
         validator = schema.newValidator();
     }
 
+    protected abstract Class<?> getDocumentType();
+
     protected final String generateXML(Object xmlRootElement) throws GenerationFailedException {
         StringWriter xmlWriter = new StringWriter();
         try {
-            JAXBContext context = org.glassfish.jaxb.runtime.v2.ContextFactory.createContext(new Class[]{Document.class}, null);
+            JAXBContext context = ContextFactory.createContext(new Class[]{getDocumentType()}, null);
             Marshaller m = context.createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             m.marshal(xmlRootElement, xmlWriter);
@@ -117,6 +120,7 @@ public abstract class SepaGenerator {
 
     public static SepaGenerator getGenerator(SepaVersion version) {
         return switch (version) {
+            case PAIN_008_001_02 -> new SepaPain00800102Generator();
             case PAIN_008_001_09 -> new SepaPain00800109Generator();
         };
     }

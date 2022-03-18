@@ -20,7 +20,10 @@ import java.util.List;
 @Test
 public class SepaSchemeVisitorTest {
 
-    private static final SepaGenerator GENERATOR = SepaGenerator.getGenerator(SepaVersion.PAIN_008_001_09);
+    private static final Iterable<SepaGenerator> GENERATORS = List.of(
+            SepaGenerator.getGenerator(SepaVersion.PAIN_008_001_02),
+            SepaGenerator.getGenerator(SepaVersion.PAIN_008_001_09)
+    );
 
     @Test
     public void generateSingleTransactionSepa() throws GenerationFailedException, IOException {
@@ -58,11 +61,14 @@ public class SepaSchemeVisitorTest {
                 ),
                 executionDate);
         Assert.assertTrue(SepaGenerator.validateDescription(sepaDocumentDescription));
-        String generatedXML = GENERATOR.generateXML(sepaDocumentDescription);
-        System.out.println("generatedXML =\n" + generatedXML);
-        Files.writeString(Path.of("C:/Users/stefa/Desktop/test.xml"), generatedXML, StandardCharsets.UTF_8,
-                StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-        System.out.println("Validating...");
-        Assert.assertTrue(GENERATOR.validateXML(generatedXML));
+
+        for(SepaGenerator generator : GENERATORS) {
+            String generatedXML = generator.generateXML(sepaDocumentDescription);
+            System.out.println("generatedXML =\n" + generatedXML);
+            Files.writeString(Path.of("C:/Users/stefa/Desktop/test.xml"), generatedXML, StandardCharsets.UTF_8,
+                    StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            System.out.println("Validating...");
+            Assert.assertTrue(generator.validateXML(generatedXML));
+        }
     }
 }
