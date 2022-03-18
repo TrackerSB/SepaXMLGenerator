@@ -80,8 +80,8 @@ public abstract class SepaGenerator {
         while (!toValidate.isEmpty()) {
             // Validate current element
             Object current = toValidate.remove();
-            if (current instanceof Validatable) {
-                if (!((Validatable) current).isValid()) {
+            if (current instanceof Validatable validatable) {
+                if (!validatable.isValid()) {
                     LOGGER.log(Level.INFO, String.format("%s is invalid", current));
                     return false;
                 }
@@ -103,6 +103,8 @@ public abstract class SepaGenerator {
                                 ex);
                     }
                 }
+            } else if (current instanceof Iterable<?> iterable) {
+                iterable.forEach(toValidate::add);
             }
         }
         return true;
