@@ -4,10 +4,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -65,8 +61,6 @@ public class SepaSchemeVisitorTest {
         for(SepaGenerator generator : GENERATORS) {
             String generatedXML = generator.generateXML(sepaDocumentDescription);
             System.out.println("generatedXML =\n" + generatedXML);
-            Files.writeString(Path.of("C:/Users/stefa/Desktop/test.xml"), generatedXML, StandardCharsets.UTF_8,
-                    StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             System.out.println("Validating...");
             Assert.assertTrue(generator.validateXML(generatedXML));
         }
