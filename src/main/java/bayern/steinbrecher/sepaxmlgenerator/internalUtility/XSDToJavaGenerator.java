@@ -9,20 +9,14 @@ import org.xml.sax.InputSource;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Paths;
 
 public class XSDToJavaGenerator {
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args) throws IOException {
         SchemaCompiler schemaCompiler = XJC.createSchemaCompiler();
         schemaCompiler.setDefaultPackageName(XSDToJavaGenerator.class.getPackageName() + ".generated");
         InputSource xsdSource = new InputSource(
-                new FileReader(
-                        XSDToJavaGenerator.class
-                                .getResource("pain.008.001.09.xsd")
-                                .toExternalForm()
-                                .substring(6)
-                )
+                new FileReader("<pathTo>/pain.008.001.02.xsd")
         );
         xsdSource.setSystemId("ensureItsNonNull");
         schemaCompiler.parseSchema(xsdSource);
