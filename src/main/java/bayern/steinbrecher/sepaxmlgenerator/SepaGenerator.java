@@ -95,7 +95,9 @@ public abstract class SepaGenerator {
                     Method accessor = component.getAccessor();
                     try {
                         Object recordMember = accessor.invoke(current);
-                        toValidate.add(recordMember);
+                        if (recordMember != null) {
+                            toValidate.add(recordMember);
+                        }
                     } catch (IllegalAccessException | InvocationTargetException ex) {
                         LOGGER.log(Level.SEVERE,
                                 String.format("Could not retrieve member of record %s with %s",
