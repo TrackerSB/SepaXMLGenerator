@@ -67,6 +67,17 @@ public class SepaPain00800102Generator extends SepaGenerator {
             instdAmt.setValue(BigDecimal.valueOf(transaction.amount()));
             transactionInfo.setInstdAmt(instdAmt);
         }
+        {
+            var drctDbtTx = new DirectDebitTransaction6();
+            {
+                var mndtRltdInf = new MandateRelatedInformation6();
+                mndtRltdInf.setMndtId(transaction.mandate().id());
+                mndtRltdInf.setDtOfSgntr(datatypeFactory.newXMLGregorianCalendar(
+                        transaction.mandate().signed().toString()));
+                drctDbtTx.setMndtRltdInf(mndtRltdInf);
+            }
+            transactionInfo.setDrctDbtTx(drctDbtTx);
+        }
         transactionInfo.setDbtrAgt(NOT_PROVIDED_BANK);
         {
             PartyIdentification32 dbtr = new PartyIdentification32();
@@ -105,6 +116,21 @@ public class SepaPain00800102Generator extends SepaGenerator {
                 pmtInf.setPmtInfId(sepaDocumentDescription.creditor().collectorId());
                 pmtInf.setPmtMtd(PaymentMethod2Code.DD);
                 pmtInf.setBtchBookg(true);
+                {
+                    var pmtTpInf = new PaymentTypeInformation20();
+                    {
+                        var svcLvl = new ServiceLevel8Choice();
+                        svcLvl.setCd("SEPA");
+                        pmtTpInf.setSvcLvl(svcLvl);
+                    }
+                    {
+                        var lclInstrm = new LocalInstrument2Choice();
+                        lclInstrm.setCd("CORE");
+                        pmtTpInf.setLclInstrm(lclInstrm);
+                    }
+                    pmtTpInf.setSeqTp(SequenceType1Code.RCUR);
+                    pmtInf.setPmtTpInf(pmtTpInf);
+                }
                 pmtInf.setReqdColltnDt(
                         datatypeFactory.newXMLGregorianCalendar(
                                 sepaDocumentDescription.executionDate()));
