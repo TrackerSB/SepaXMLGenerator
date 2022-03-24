@@ -105,6 +105,11 @@ public class SepaPain00800102Generator extends SepaGenerator {
                 grpHdr.setCreDtTm(datatypeFactory.newXMLGregorianCalendar(new GregorianCalendar()));
                 grpHdr.setMsgId(sepaDocumentDescription.msgId().value());
                 grpHdr.setNbOfTxs(String.valueOf(sepaDocumentDescription.transactions().size()));
+                grpHdr.setCtrlSum(BigDecimal.valueOf(
+                        sepaDocumentDescription.transactions()
+                                .stream()
+                                .mapToDouble(DirectDebitTransaction::amount)
+                                .sum()));
                 {
                     PartyIdentification32 initgPty = new PartyIdentification32();
                     grpHdr.setInitgPty(initgPty);
@@ -141,6 +146,29 @@ public class SepaPain00800102Generator extends SepaGenerator {
                 }
                 pmtInf.setCdtrAcct(convert(sepaDocumentDescription.creditor().collector().iban()));
                 pmtInf.setCdtrAgt(NOT_PROVIDED_BANK);
+                {
+                    var cdtrSchmeId = new PartyIdentification32();
+                    {
+                        var id = new Party6Choice();
+                        {
+                            var prvtId = new PersonIdentification5();
+                            {
+                                var creditorId = new GenericPersonIdentification1();
+                                creditorId.setId(sepaDocumentDescription.creditor().creditorId().value());
+                                {
+                                    var schmeNm = new PersonIdentificationSchemeName1Choice();
+                                    schmeNm.setPrtry("SEPA");
+                                    creditorId.setSchmeNm(schmeNm);
+                                }
+                                prvtId.getOthr()
+                                        .add(creditorId);
+                            }
+                            id.setPrvtId(prvtId);
+                        }
+                        cdtrSchmeId.setId(id);
+                    }
+                    pmtInf.setCdtrSchmeId(cdtrSchmeId);
+                }
 
                 for (DirectDebitTransaction transaction : sepaDocumentDescription.transactions()) {
                     pmtInf.getDrctDbtTxInf()
