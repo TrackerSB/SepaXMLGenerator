@@ -5,13 +5,13 @@
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.soabase.record-builder/record-builder-processor/22/6b575d211197743f71c6eabd5defd4e1aa23f1ae/record-builder-processor-22.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.soabase.record-builder/record-builder-processor/35/4a81c53a787919738ae89cd7c935848b2ed3141b/record-builder-processor-35.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup/javapoet/1.12.1/e0e49f502697522ef047470b117ff81edc9f9a07/javapoet-1.12.1.jar" />
-          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.soabase.record-builder/record-builder-core/22/7022a195366b13b289ea490a166cad9c0badf42d/record-builder-core-22.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.soabase.record-builder/record-builder-core/35/2a2f0cef5ca0802839584766930bec8f8df1813b/record-builder-core-35.jar" />
         </processorPath>
         <module name="SepaXMLGenerator.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="19" />
   </component>
 </project>

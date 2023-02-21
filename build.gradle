@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
     id 'signing'
 
-    id 'com.github.gmazzo.buildconfig' version "2.0.2"
+    id 'com.github.gmazzo.buildconfig' version "3.1.0"
 }
 
 group 'bayern.steinbrecher'
@@ -14,15 +14,15 @@ repositories {
 }
 
 dependencies {
-    annotationProcessor 'io.soabase.record-builder:record-builder-processor:22'
-    implementation 'io.soabase.record-builder:record-builder-core:22'
-    implementation('com.sun.xml.bind:jaxb-ri:3.0.2') {
+    annotationProcessor 'io.soabase.record-builder:record-builder-processor:35'
+    implementation 'io.soabase.record-builder:record-builder-core:35'
+    implementation('com.sun.xml.bind:jaxb-ri:4.0.2') {
         exclude group: 'com.sun.xml.bind', module: 'jaxb-release-documentation'
         exclude group: 'com.sun.xml.bind', module: 'jaxb-samples'
         exclude group: 'com.sun.xml.bind', module: 'jaxb-jxc'
     }
 
-    testImplementation 'org.testng:testng:7.4.0'
+    testImplementation 'org.testng:testng:7.7.0'
 }
 
 java {
@@ -44,7 +44,7 @@ buildConfig {
 
 compileJava {
     options.encoding = 'UTF-8'
-    options.release = 16
+    options.release = 19
 }
 
 javadoc {
