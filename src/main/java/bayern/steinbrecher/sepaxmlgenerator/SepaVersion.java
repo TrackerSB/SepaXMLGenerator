@@ -8,5 +8,6 @@ package bayern.steinbrecher.sepaxmlgenerator;
  */
 public enum SepaVersion {
     PAIN_008_001_02,
-    PAIN_008_001_09
+    PAIN_008_001_09,
+    PAIN_008_001_11
 }

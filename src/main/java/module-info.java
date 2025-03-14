@@ -11,4 +11,5 @@ module bayern.steinbrecher.SepaXMLGenerator {
 
     opens bayern.steinbrecher.sepaxmlgenerator.sepatypes.pain00800102 to com.sun.xml.bind;
     opens bayern.steinbrecher.sepaxmlgenerator.sepatypes.pain00800109 to com.sun.xml.bind;
+    opens bayern.steinbrecher.sepaxmlgenerator.sepatypes.pain00800111 to com.sun.xml.bind;
 }

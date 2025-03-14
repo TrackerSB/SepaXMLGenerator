@@ -2,6 +2,7 @@ package bayern.steinbrecher.sepaxmlgenerator;
 
 import bayern.steinbrecher.sepaxmlgenerator.generators.SepaPain00800102Generator;
 import bayern.steinbrecher.sepaxmlgenerator.generators.SepaPain00800109Generator;
+import bayern.steinbrecher.sepaxmlgenerator.generators.SepaPain00800111Generator;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
@@ -30,7 +31,7 @@ import java.util.logging.Logger;
  */
 public abstract class SepaGenerator {
 
-    private static final Logger LOGGER = Logger.getLogger(SepaPain00800109Generator.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SepaGenerator.class.getName());
     private static final SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
     private final Validator validator;
 
@@ -126,6 +127,7 @@ public abstract class SepaGenerator {
         return switch (version) {
             case PAIN_008_001_02 -> new SepaPain00800102Generator();
             case PAIN_008_001_09 -> new SepaPain00800109Generator();
+            case PAIN_008_001_11 -> new SepaPain00800111Generator();
         };
     }
 }

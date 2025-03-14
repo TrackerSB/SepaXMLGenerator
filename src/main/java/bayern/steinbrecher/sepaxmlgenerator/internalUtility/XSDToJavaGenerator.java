@@ -16,7 +16,7 @@ public class XSDToJavaGenerator {
         SchemaCompiler schemaCompiler = XJC.createSchemaCompiler();
         schemaCompiler.setDefaultPackageName(XSDToJavaGenerator.class.getPackageName() + ".generated");
         InputSource xsdSource = new InputSource(
-                new FileReader("<pathTo>/pain.008.001.02.xsd")
+                new FileReader("E:/Downloads/pain.008.001.11.xsd")
         );
         xsdSource.setSystemId("ensureItsNonNull");
         schemaCompiler.parseSchema(xsdSource);

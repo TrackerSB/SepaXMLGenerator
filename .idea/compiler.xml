@@ -9,7 +9,7 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup/javapoet/1.12.1/e0e49f502697522ef047470b117ff81edc9f9a07/javapoet-1.12.1.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.soabase.record-builder/record-builder-core/35/2a2f0cef5ca0802839584766930bec8f8df1813b/record-builder-core-35.jar" />
         </processorPath>
-        <module name="SepaXMLGenerator.main" />
+        <module name="bayern.steinbrecher.SepaXMLGenerator.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="19" />
