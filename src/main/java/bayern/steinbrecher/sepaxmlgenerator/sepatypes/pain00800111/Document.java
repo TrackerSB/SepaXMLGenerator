@@ -4,6 +4,7 @@ package bayern.steinbrecher.sepaxmlgenerator.sepatypes.pain00800111;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
 
 
@@ -30,6 +31,7 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlType(name = "Document", propOrder = {
     "cstmrDrctDbtInitn"
 })
+@XmlRootElement(name = "Document")
 public class Document {
 
     @XmlElement(name = "CstmrDrctDbtInitn", required = true)
