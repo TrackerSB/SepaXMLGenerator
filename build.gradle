@@ -4,18 +4,19 @@ plugins {
     id 'signing'
 
     id 'com.github.gmazzo.buildconfig' version "3.1.0"
+    id 'org.jreleaser' version '1.17.0'
 }
 
 group 'bayern.steinbrecher'
-version '0.1-rc.28-SNAPSHOT'
+version '0.1.28-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    annotationProcessor 'io.soabase.record-builder:record-builder-processor:35'
-    implementation 'io.soabase.record-builder:record-builder-core:35'
+    annotationProcessor 'io.soabase.record-builder:record-builder-processor:44'
+    implementation 'io.soabase.record-builder:record-builder-core:44'
     implementation('com.sun.xml.bind:jaxb-ri:4.0.2') {
         exclude group: 'com.sun.xml.bind', module: 'jaxb-release-documentation'
         exclude group: 'com.sun.xml.bind', module: 'jaxb-samples'
@@ -28,7 +29,7 @@ dependencies {
 java {
     modularity.inferModulePath = true
     withSourcesJar()
-    // withJavadocJar()
+    withJavadocJar()
 }
 
 test {
@@ -51,19 +52,53 @@ javadoc {
     if (JavaVersion.current().isJava9Compatible()) {
         options.addBooleanOption('html5', true)
     }
+
+    exclude 'bayern/steinbrecher/sepaxmlgenerator/**'
+    include 'bayern/steinbrecher/sepaxmlgenerator/GenerationFailedException.java'
+}
+
+jreleaser {
+    signing {
+        active = 'ALWAYS'
+        armored = true
+        mode = 'command'
+    }
+    checksum{
+        algorithm('SHA-256')
+    }
+    release {
+        github {
+            enabled = true
+        }
+    }
+    deploy {
+        maven {
+            mavenCentral {
+                sonatype {
+                    active = 'ALWAYS'
+                    url = 'https://central.sonatype.com/api/v1/publisher'
+                    stagingRepository('build/staging-deploy')
+                    snapshotSupported = true
+
+                    applyMavenCentralRules = false
+                    sign = false
+                    checksums = true
+                    sourceJar = true
+                    javadocJar = true
+                    verifyPom = true
+                }
+            }
+        }
+    }
+    announce {
+        active = 'NEVER'
+    }
 }
 
 publishing {
     repositories {
         maven {
-            name = "OSSRH"
-            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-            credentials {
-                username = "${ossrhUsername}"
-                password = "${ossrhPassword}"
-            }
+            url = layout.buildDirectory.dir('staging-deploy')
         }
     }
     publications {
